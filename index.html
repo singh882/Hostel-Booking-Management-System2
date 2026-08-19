@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hostel Booking Management System</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:14px "Segoe UI",Arial,sans-serif;background:#f5f7fb;color:#182238}
+header{height:76px;background:#fff;border-bottom:1px solid #e5e8ef;display:flex;justify-content:space-between;align-items:center;padding:0 30px;position:sticky;top:0;z-index:5}
+h1{font-size:21px;margin:0}header p,small{color:#7a8598;margin:3px 0}header span{color:#15945e}.layout{display:flex;min-height:calc(100vh - 76px)}
+nav{width:225px;background:#111827;padding:18px 12px}nav button{display:block;width:100%;border:0;background:none;color:#cbd3e0;text-align:left;padding:12px;border-radius:8px;margin:2px 0;cursor:pointer;font-size:14px}
+nav button:hover,nav button.active{background:#29364e;color:#fff}main{flex:1;padding:30px;max-width:1300px;margin:auto}
+section{display:none}section.active{display:block}.hero{background:linear-gradient(135deg,#202c47,#3b4d70);color:#fff;padding:30px;border-radius:16px;display:flex;justify-content:space-between;gap:20px}
+.hero h2{font-size:28px;margin:8px 0}.hero p{color:#dbe2ed}.hero button,button{border:0;border-radius:8px;padding:11px 16px;background:#263652;color:white;font-weight:600;cursor:pointer}
+.hero button{background:white;color:#263652}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:20px 0}
+.cards>div,.panel{background:white;border:1px solid #e5e8ef;border-radius:13px;padding:20px}.cards b{display:block;font-size:30px;margin-top:8px}
+.features,.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}.features span{background:#f7f8fb;border:1px solid #e8ebf0;padding:15px;border-radius:9px}
+.panel{margin-top:18px}form{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}label{font-weight:600;color:#4b5870}
+input,select,textarea{display:block;width:100%;margin-top:6px;padding:11px;border:1px solid #dce1e9;border-radius:8px;font:inherit}textarea{min-height:100px}
+.panel form button{grid-column:1/-1;justify-self:start}.grid{grid-template-columns:repeat(3,1fr)}.room{background:white;border:1px solid #e5e8ef;border-radius:12px;padding:15px}
+.room h3{margin:0 0 6px}.room p{color:#69758a}.room.full{border-left:4px solid #d95462}.room.free{border-left:4px solid #20a96a}
+.list{padding:12px 0;border-bottom:1px solid #eee}.ok{margin-top:15px;padding:15px;background:#effaf4;border:1px solid #c9ead8;border-radius:9px}
+.err{margin-top:15px;padding:15px;background:#fff1f2;border:1px solid #f0c5ca;border-radius:9px}
+@media(max-width:850px){nav{width:180px}.cards,.features,.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.layout{display:block}nav{width:100%;display:flex;overflow:auto}nav button{min-width:max-content}.cards,.features,.grid,form{grid-template-columns:1fr}.hero{display:block}}
+</style>
+</head>
+<body>
+<header><div><h1>Hostel Booking Management System</h1><p>Java DSA Project • Web Interface</p></div><span>● System Ready</span></header>
+<div class="layout">
+<nav>
+<button class="active" onclick="page('dashboard')">🏠 Dashboard</button>
+<button onclick="page('booking')">🛏️ Book Room</button>
+<button onclick="page('cancel')">↩️ Cancel Booking</button>
+<button onclick="page('search')">🔎 Search Student</button>
+<button onclick="page('rooms')">🏢 Display Hostel</button>
+<button onclick="page('stats')">📊 Statistics</button>
+<button onclick="page('history')">🧾 Booking History</button>
+<button onclick="page('complaints')">📝 Complaints</button>
+<button onclick="page('waiting')">⏳ Waiting List</button>
+</nav>
+<main>
+<section id="dashboard" class="active">
+<div class="hero"><div><small>HOSTEL MANAGEMENT</small><h2>Welcome to your hostel dashboard</h2><p>Manage rooms, students, bookings, cancellations, waiting list, complaints and history.</p></div><button onclick="page('booking')">+ New Booking</button></div>
+<div class="cards"><div><small>Total Rooms</small><b id="roomsN">30</b></div><div><small>Total Beds</small><b>54</b></div><div><small>Students Staying</small><b id="studentsN">0</b></div><div><small>Waiting Students</small><b id="waitingN">0</b></div></div>
+<div class="panel"><h3>System Features</h3><div class="features"><span>🛏️ Room Booking</span><span>↩️ Cancellation</span><span>🔎 Student Search</span><span>🏢 Room Status</span><span>📊 Statistics</span><span>🧾 Booking History</span><span>📝 Complaints</span><span>⏳ Waiting Queue</span></div></div>
+</section>
+<section id="booking"><h2>Book a Room</h2><p>Allocate an available bed to a student.</p><div class="panel"><form id="bookForm">
+<label>Student ID<input id="sid" required placeholder="ST101"></label><label>Name<input id="sname" required></label>
+<label>Age<input id="age" type="number" required></label><label>Gender<select id="gender" required><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></label>
+<label>Course<input id="course" required placeholder="B.Tech CSE"></label><label>Year<input id="year" type="number" min="1" max="5" required></label>
+<button type="submit">Book Available Room</button></form><div id="bookOut"></div></div></section>
+<section id="cancel"><h2>Cancel Booking</h2><div class="panel"><form id="cancelForm"><input id="cancelId" required placeholder="Student ID"><button>Cancel Booking</button></form><div id="cancelOut"></div></div></section>
+<section id="search"><h2>Search Student</h2><div class="panel"><form id="searchForm"><input id="searchId" required placeholder="Student ID"><button>Search</button></form><div id="searchOut"></div></div></section>
+<section id="rooms"><h2>Display Hostel</h2><p>Room-wise occupancy and availability.</p><div id="roomGrid" class="grid"></div></section>
+<section id="stats"><h2>Hostel Statistics</h2><div class="cards"><div><small>Total Rooms</small><b>30</b></div><div><small>Students Staying</small><b id="st2">0</b></div><div><small>Available Beds</small><b id="beds">54</b></div><div><small>Waiting Students</small><b id="wait2">0</b></div></div></section>
+<section id="history"><h2>Booking History</h2><div class="panel" id="historyList">No booking history available.</div></section>
+<section id="complaints"><h2>Complaints</h2><div class="panel"><form id="complaintForm"><input id="cid" required placeholder="Student ID"><textarea id="ctext" required placeholder="Describe complaint"></textarea><button>Add Complaint</button></form><div id="complaintList"></div></div></section>
+<section id="waiting"><h2>Waiting List</h2><p>Students waiting for an available bed (FIFO).</p><div class="panel" id="waitingList">No students are currently waiting.</div></section>
+</main></div>
+<script>
+const state={students:[],waiting:[],history:[],complaints:[]},rooms=[];
+for(let f=1;f<=3;f++)for(let i=1;i<=10;i++)rooms.push({no:f*100+i,floor:f,cap:i<=3?1:i<=7?2:3});
+function save(){localStorage.setItem('hostelState',JSON.stringify(state));render()}
+function load(){let x=localStorage.getItem('hostelState');if(x)Object.assign(state,JSON.parse(x));render()}
+function page(id){document.querySelectorAll('section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));[...document.querySelectorAll('nav button')].find(x=>x.getAttribute('onclick')===`page('${id}')`)?.classList.add('active');render()}
+function info(r){let s=state.students.filter(x=>x.room===r.no);return {...r,s,free:r.cap-s.length}}
+function render(){let total=state.students.length,w=state.waiting.length;roomsN.textContent=30;studentsN.textContent=total;waitingN.textContent=w;st2.textContent=total;wait2.textContent=w;beds.textContent=54-total;roomGrid.innerHTML=rooms.map(r=>{let x=info(r);return `<div class="room ${x.free?'free':'full'}"><h3>Room ${r.no}</h3><p>Floor ${r.floor} • Capacity ${r.cap} • Available beds ${x.free}</p><div>${x.s.length?x.s.map(s=>s.id+' — '+s.name).join('<br>'):'No students assigned'}</div></div>`}).join('');historyList.innerHTML=state.history.length?state.history.map(x=>`<div class="list">${x}</div>`).join(''):'No booking history available.';waitingList.innerHTML=state.waiting.length?state.waiting.map((x,i)=>`<div class="list"><b>${i+1}. ${x.name}</b> — ${x.id}<br><small>${x.course}, Year ${x.year}</small></div>`).join(''):'No students are currently waiting.';complaintList.innerHTML=state.complaints.map(x=>`<div class="list"><b>${x.id}</b><br>${x.text}<br><small>${x.date}</small></div>`).join('')}
+bookForm.onsubmit=e=>{e.preventDefault();let id=sid.value.trim();if(state.students.some(x=>x.id===id)||state.waiting.some(x=>x.id===id)){bookOut.innerHTML='<div class="err">Student ID already exists.</div>';return}let r=rooms.find(x=>info(x).free>0),s={id,name:sname.value.trim(),age:age.value,gender:gender.value,course:course.value.trim(),year:year.value};if(!r){state.waiting.push(s);state.history.unshift('Waiting Queue : '+id);bookOut.innerHTML='<div class="ok">Hostel is full. Student added to waiting queue.</div>'}else{s.room=r.no;s.floor=r.floor;state.students.push(s);let bid='BK'+Date.now();state.history.unshift(`Booked : ${id} -> Room ${r.no}`);bookOut.innerHTML=`<div class="ok"><b>HOSTEL BOOKING RECEIPT</b><br><br>Booking ID: ${bid}<br>Student ID: ${id}<br>Name: ${s.name}<br>Room No.: ${r.no}<br>Floor: ${r.floor}<br>Status: SUCCESS</div>`;e.target.reset()}save()};
+cancelForm.onsubmit=e=>{e.preventDefault();let id=cancelId.value.trim(),i=state.students.findIndex(x=>x.id===id);if(i<0){cancelOut.innerHTML='<div class="err">Student not found.</div>';return}let old=state.students[i];state.students.splice(i,1);state.history.unshift(`Cancelled : ${id} -> Room ${old.room}`);if(state.waiting.length){let n=state.waiting.shift();n.room=old.room;n.floor=old.floor;state.students.push(n);state.history.unshift(`Booked from Waiting Queue : ${n.id} -> Room ${n.room}`)}cancelOut.innerHTML='<div class="ok">Booking cancelled successfully.</div>';e.target.reset();save()};
+searchForm.onsubmit=e=>{e.preventDefault();let s=state.students.find(x=>x.id===searchId.value.trim());searchOut.innerHTML=s?`<div class="ok"><b>STUDENT FOUND</b><br><br>ID: ${s.id}<br>Name: ${s.name}<br>Course: ${s.course}<br>Room Number: ${s.room}<br>Floor: ${s.floor}</div>`:'<div class="err">Student not found.</div>'};
+complaintForm.onsubmit=e=>{e.preventDefault();state.complaints.unshift({id:cid.value.trim(),text:ctext.value.trim(),date:new Date().toLocaleString()});e.target.reset();save()};
+load();
+</script>
+</body></html>
